@@ -1,3 +1,5 @@
+using Application.Activities.Queries;
+using Application.Core;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -10,8 +12,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-
-builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddCors();
+builder.Services.AddMediatR(
+    x => 
+        x.RegisterServicesFromAssemblyContaining<GetActivityList.Handler>()
+    );
+builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
@@ -21,6 +27,10 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors(options =>
+    {
+        options.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:5173");
+    });
 }
 
 //app.UseHttpsRedirection();
