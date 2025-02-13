@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Application.Activities.DTOs;
+using AutoMapper;
 using Domain;
 
 namespace Application.Core;
@@ -10,5 +11,6 @@ public class MappingProfiles: Profile
     {
         // effectively maps the properties of the source object to the destination object
         CreateMap<Activity, Activity>();
+        CreateMap<CreateActivityDto, Activity>();
     }
 }
