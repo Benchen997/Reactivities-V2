@@ -12,5 +12,6 @@ public class MappingProfiles: Profile
         // effectively maps the properties of the source object to the destination object
         CreateMap<Activity, Activity>();
         CreateMap<CreateActivityDto, Activity>();
+        CreateMap<EditActivityDto, Activity>();
     }
 }
